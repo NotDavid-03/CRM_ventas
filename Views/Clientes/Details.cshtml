@@ -1,0 +1,79 @@
+﻿@model CRM_Nexus_Retail.Models.Omni_Cliente
+
+@{
+    ViewBag.Title = "Detalle del Cliente";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+
+            <div class="d-flex align-items-center mb-4">
+                <a href="@Url.Action("Index")" class="btn btn-outline-secondary mr-3">
+                    <i class="fa fa-arrow-left"></i> Volver al listado
+                </a>
+                <div>
+                    <h2 class="mb-0 text-info"><i class="fa fa-user"></i> Ficha del Cliente</h2>
+                    <small class="text-muted">Identificador del sistema: #@Model.Id_Nexus_Cliente</small>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <span class="h5 mb-0">@Model.Nombre_Completo</span>
+                    @if (Model.Estado_Cuenta)
+                    {
+                        <span class="badge badge-success px-3 py-2">Activo</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-secondary px-3 py-2">Inactivo</span>
+                    }
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold text-muted">Código de Referencia:</div>
+                        <div class="col-sm-8"><span class="badge badge-info p-2">@Model.Codigo_Ref</span></div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold text-muted">Correo de Contacto:</div>
+                        <div class="col-sm-8"><a href="mailto:@Model.Correo_Contacto">@Model.Correo_Contacto</a></div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold text-muted">Línea Directa:</div>
+                        <div class="col-sm-8">@(Model.Linea_Directa ?? "No registrado")</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold text-muted">Domicilio Fiscal:</div>
+                        <div class="col-sm-8">@(Model.Domicilio_Fiscal ?? "No registrado")</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold text-muted">Saldo de Puntos:</div>
+                        <div class="col-sm-8">
+                            <span class="badge badge-warning p-2">
+                                <i class="fa fa-star"></i> @Model.Saldo_Puntos puntos acumulados
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold text-muted">Fecha de Alta:</div>
+                        <div class="col-sm-8">@Model.Fecha_Alta.ToString("dd/MM/yyyy HH:mm")</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 font-weight-bold text-muted">Observaciones:</div>
+                        <div class="col-sm-8">@(Model.Observaciones ?? "Sin observaciones registradas")</div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-end">
+                    <a href="@Url.Action("Edit", new { id = Model.Id_Nexus_Cliente })" class="btn btn-warning mr-2">
+                        <i class="fa fa-pencil"></i> Modificar Datos
+                    </a>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left"></i> Volver
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

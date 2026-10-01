@@ -1,0 +1,133 @@
+﻿@model IEnumerable<CRM_Nexus_Retail.Models.Omni_Cliente>
+
+@{
+    ViewBag.Title = "Gestión de Clientes";
+}
+
+<!-- CDN de FontAwesome para asegurar que los íconos se muestren siempre -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<!-- ALERTAS DE ÉXITO O ERROR -->
+@if (TempData["Exito"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        <strong><i class="fas fa-check-circle"></i> @TempData["Exito"]</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        <strong><i class="fas fa-exclamation-triangle"></i> @TempData["Error"]</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<!-- ENCABEZADO -->
+<div class="row align-items-center mt-4 mb-3">
+    <div class="col-md-8">
+        <h2><i class="fas fa-users text-primary"></i> Gestión de Clientes</h2>
+        <p class="text-muted mb-0">Administración del catálogo de clientes registrados</p>
+    </div>
+    <div class="col-md-4 text-right">
+        <a href="@Url.Action("Create")" class="btn btn-primary btn-lg shadow-sm">
+            <i class="fas fa-user-plus"></i> Nuevo Cliente
+        </a>
+    </div>
+</div>
+
+<hr />
+
+<!-- TABLA DE CLIENTES -->
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped mb-0 text-center">
+                <thead class="thead-dark bg-dark text-white">
+                    <tr>
+                        <th>#</th>
+                        <th>Código Ref.</th>
+                        <th class="text-left">Nombre Completo</th>
+                        <th class="text-left">Correo de Contacto</th>
+                        <th>Línea Directa</th>
+                        <th>Saldo de Puntos</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        int fila = 1;
+                        foreach (var cliente in Model)
+                        {
+                            <tr>
+                                <td class="align-middle font-weight-bold">@fila</td>
+                                <td class="align-middle">
+                                    <span class="badge badge-info p-2" style="font-size: 0.9rem;">
+                                        @cliente.Codigo_Ref
+                                    </span>
+                                </td>
+                                <td class="align-middle text-left font-weight-bold">@cliente.Nombre_Completo</td>
+                                <td class="align-middle text-left">
+                                    <a href="mailto:@cliente.Correo_Contacto">
+                                        @cliente.Correo_Contacto
+                                    </a>
+                                </td>
+                                <td class="align-middle">@(string.IsNullOrEmpty(cliente.Linea_Directa) ? "—" : cliente.Linea_Directa)</td>
+                                <td class="align-middle">
+                                    <span class="badge badge-warning p-2" style="font-size: 0.9rem;">
+                                        <i class="fas fa-star"></i> @cliente.Saldo_Puntos pts
+                                    </span>
+                                </td>
+                                <td class="align-middle">
+                                    @if (cliente.Estado_Cuenta)
+                                    {
+                                        <span class="badge badge-success p-2">Activo</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-secondary p-2">Inactivo</span>
+                                    }
+                                </td>
+                                <td class="align-middle">
+                                    <a href="@Url.Action("Details", new { id = cliente.Id_Nexus_Cliente })"
+                                       class="btn btn-sm btn-info mb-1" title="Ver detalle">
+                                        <i class="fas fa-eye"></i> Ver
+                                    </a>
+                                    <a href="@Url.Action("Edit", new { id = cliente.Id_Nexus_Cliente })"
+                                       class="btn btn-sm btn-warning mb-1 text-dark" title="Editar">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    <a href="@Url.Action("Delete", new { id = cliente.Id_Nexus_Cliente })"
+                                       class="btn btn-sm btn-danger mb-1" title="Dar de baja"
+                                       onclick="return confirm('¿Está seguro de desactivar a este cliente?');">
+                                        <i class="fas fa-user-slash"></i> Baja
+                                    </a>
+                                </td>
+                            </tr>
+                            fila++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center text-muted py-5">
+                                <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
+                                No hay clientes registrados en este momento.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3 text-muted text-right">
+    <small>Total de registros: <strong>@(Model != null ? Model.Count() : 0)</strong></small>
+</div>

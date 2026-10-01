@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CRM Nexus Retail</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- Librería de iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+<body>
+    <!-- BARRA DE NAVEGACIÓN GLOBAL -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("CRM Nexus Retail", "Index", "Clientes", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="@Url.Action("Index", "Clientes")">
+                            <i class="fas fa-users"></i> Clientes
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-chart-line"></i> Reportes <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Reporte1", "Reportes")">1. Ventas por Sucursal y Segmento</a></li>
+                            <li><a href="@Url.Action("Reporte2", "Reportes")">2. Rentabilidad por Marca y Promoción</a></li>
+                            <li><a href="@Url.Action("Reporte3", "Reportes")">3. Rendimiento Campañas Marketing</a></li>
+                            <li><a href="@Url.Action("Reporte4", "Reportes")">4. Arqueo por Terminal y Forma Pago</a></li>
+                            <li><a href="@Url.Action("Reporte5", "Reportes")">5. Canjes de Puntos Fidelidad</a></li>
+                            <li><a href="@Url.Action("Reporte6", "Reportes")">6. Trazabilidad Kardex y Proveedor</a></li>
+                            <li><a href="@Url.Action("Reporte7", "Reportes")">7. Productividad de Colaboradores</a></li>
+                            <li><a href="@Url.Action("Reporte8", "Reportes")">8. Auditoría Devoluciones y Mermas</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL DE LAS VISTAS -->
+    <div class="container body-content" style="margin-top: 65px; margin-bottom: 30px;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - CRM Nexus Retail - Sistema de Ventas al Detalle y Puntos de Venta</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
